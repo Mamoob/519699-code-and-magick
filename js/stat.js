@@ -22,7 +22,7 @@ window.renderStatistics = function (ctx, names, times) {
     ctx.fillRect(x, y, widthRect, heightRect);
   };
 
-  function bazierInCanvas(x, y, colorBg) {
+  var bazierInCanvas = function (x, y, colorBg) {
     ctx.beginPath();
     ctx.fillStyle = colorBg;
     ctx.moveTo(89 + x, 452 + y);
@@ -34,7 +34,7 @@ window.renderStatistics = function (ctx, names, times) {
     ctx.bezierCurveTo(-24 + x, 335 + y, 89 + x, 451 + y, 88 + x, 451 + y);
     ctx.stroke();
     ctx.fill();
-  }
+  };
   bazierInCanvas(30, -160, 'rgba(0, 0, 0, 0.7)');
   bazierInCanvas(20, -170, '#ffffff');
 
