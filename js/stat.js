@@ -11,7 +11,6 @@ window.renderStatistics = function (ctx, names, times) {
   var histagrammHeight = 120;
   var widthColumns = 40;
   var modalWindowWidth = 420;
-  var modalWindowHeight = 270;
 
   var addTextInCanvas = function (text, x, y, colorText) {
     ctx.fillStyle = colorText;
@@ -23,9 +22,22 @@ window.renderStatistics = function (ctx, names, times) {
     ctx.fillRect(x, y, widthRect, heightRect);
   };
 
-  addRectInCanvas(120, 20, modalWindowWidth, modalWindowHeight, 'rgba(0, 0, 0, 0.7)');
-  addRectInCanvas(110, 10, modalWindowWidth, modalWindowHeight, '#f2f2f2');
-  ctx.strokeRect(110, 10, modalWindowWidth, modalWindowHeight);
+  function bazierInCanvas(x, y, colorBg) {
+    ctx.beginPath();
+    ctx.fillStyle = colorBg;
+    ctx.moveTo(89 + x, 452 + y);
+    ctx.bezierCurveTo(89 + x, 452 + y, 340 + x, 455 + y, 468 + x, 453 + y);
+    ctx.bezierCurveTo(504 + x, 452 + y, 587 + x, 459 + y, 583 + x, 354 + y);
+    ctx.bezierCurveTo(581 + x, 288 + y, 555 + x, 329 + y, 519 + x, 273 + y);
+    ctx.bezierCurveTo(402 + x, 89 + y, -33 + x, 214 + y, 62 + x, 233 + y);
+    ctx.bezierCurveTo(184 + x, 258 + y, 98 + x, 292 + y, 58 + x, 306 + y);
+    ctx.bezierCurveTo(-24 + x, 335 + y, 89 + x, 451 + y, 88 + x, 451 + y);
+    ctx.stroke();
+    ctx.fill();
+  }
+  bazierInCanvas(30, -160, 'rgba(0, 0, 0, 0.7)');
+  bazierInCanvas(20, -170, '#ffffff');
+
   ctx.font = '16px PT Mono';
   addTextInCanvas('Ура вы победили!', 240, 40, 'green');
   addTextInCanvas('Список результатов:', 230, 60, 'grey');
