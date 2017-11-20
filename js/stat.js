@@ -50,7 +50,6 @@ window.renderStatistics = function (ctx, names, times) {
   for (var i = 0; i < names.length; i++) {
     ctx.fillStyle = (names[i] === 'Вы') ? 'rgba(255, 0, 0, 1)' : 'rgba(0, 20, 160,' + Math.ceil(Math.random() * 10) / 10 + ')';
     addRectInCanvas(initialX += distanceBetweenColumns, initialY - (step * times[i]), widthColumns, step * times[i]);
-    ctx.fillStyle = 'grey';
     addTextInCanvas(names[i], initialX, histagrammHeight + 150, 'grey');
     addTextInCanvas(times[i].toFixed(2), initialX, histagrammHeight - (step * times[i]) + 120, 'grey');
   }
