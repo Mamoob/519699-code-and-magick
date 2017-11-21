@@ -52,8 +52,6 @@ window.renderStatistics = function (ctx, names, times) {
 
   step = histagrammHeight / maxTime;
 
-  addRectInCanvas(initialX, initialY - (step * times), widthColumns, step * times);
-
   var getRandomNumber = function () {
     return Math.floor(Math.random() * (1 - 0.1 + 1)) + 0.1;
   };
