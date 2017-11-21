@@ -7,7 +7,6 @@ window.renderStatistics = function (ctx, names, times) {
 
   var initialY = 250;
   var maxTime = 0;
-  var maxIndex = 0;
   var histagrammHeight = 120;
   var widthColumns = 40;
   var modalWindowWidth = 420;
@@ -39,6 +38,7 @@ window.renderStatistics = function (ctx, names, times) {
   bazierInCanvas(20, -170, '#ffffff');
 
   ctx.font = '16px PT Mono';
+
   addTextInCanvas('Ура вы победили!', 240, 40, 'green');
   addTextInCanvas('Список результатов:', 230, 60, 'grey');
 
@@ -46,7 +46,6 @@ window.renderStatistics = function (ctx, names, times) {
     for (var i = 0; i < arr.length; i++) {
       if (arr[i] > maxTime) {
         maxTime = arr[i];
-        maxIndex = i;
       }
     }
   };
@@ -56,13 +55,13 @@ window.renderStatistics = function (ctx, names, times) {
   distanceBetweenColumns = modalWindowWidth / names.length;
   initialX = (distanceBetweenColumns / 2) - (widthColumns / 2);
 
-  addTextInCanvas('Худшее время ' + maxTime.toFixed(2) + ' мс у игрока ' + names[maxIndex], 150, 90, 'red');
   addRectInCanvas(initialX, initialY - (step * times[i]), widthColumns, step * times[i]);
 
   for (var i = 0; i < names.length; i++) {
-    ctx.fillStyle = (names[i] === 'Вы') ? 'rgba(255, 0, 0, 1)' : 'rgba(0, 20, 160,' + Math.ceil(Math.random() * 10) / 10 + ')';
+    ctx.fillStyle = (names[i] === 'Вы') ? 'rgba(255, 0, 0, 1)' : 'rgba(0, 20, 160,' + Math.floor(Math.random() * (1 - 0.1 + 1)) + 0.1 + ')';
+
     addRectInCanvas(initialX += distanceBetweenColumns, initialY - (step * times[i]), widthColumns, step * times[i]);
     addTextInCanvas(names[i], initialX, histagrammHeight + 150, 'grey');
-    addTextInCanvas(times[i].toFixed(2), initialX, histagrammHeight - (step * times[i]) + 120, 'grey');
+    addTextInCanvas(times[i].toFixed(0), initialX, histagrammHeight - (step * times[i]) + 120, 'grey');
   }
 };
