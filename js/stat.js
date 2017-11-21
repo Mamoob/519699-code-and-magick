@@ -1,15 +1,14 @@
 'use strict';
 
 window.renderStatistics = function (ctx, names, times) {
-  var distanceBetweenColumns;
   var step;
-  var initialX;
 
+  var initialX = 170;
   var initialY = 250;
+  var distanceBetweenColumns = 50;
   var maxTime = 0;
-  var histagrammHeight = 120;
+  var histagrammHeight = 150;
   var widthColumns = 40;
-  var modalWindowWidth = 420;
 
   var addTextInCanvas = function (text, x, y, colorText) {
     ctx.fillStyle = colorText;
@@ -52,16 +51,18 @@ window.renderStatistics = function (ctx, names, times) {
   getMaxNumber(times);
 
   step = histagrammHeight / maxTime;
-  distanceBetweenColumns = modalWindowWidth / names.length;
-  initialX = (distanceBetweenColumns / 2) - (widthColumns / 2);
 
-  addRectInCanvas(initialX, initialY - (step * times[i]), widthColumns, step * times[i]);
+  addRectInCanvas(initialX, initialY - (step * times), widthColumns, step * times);
+
+  var getRandomNumber = function () {
+    return Math.floor(Math.random() * (1 - 0.1 + 1)) + 0.1;
+  };
 
   for (var i = 0; i < names.length; i++) {
-    ctx.fillStyle = (names[i] === 'Вы') ? 'rgba(255, 0, 0, 1)' : 'rgba(0, 20, 160,' + Math.floor(Math.random() * (1 - 0.1 + 1)) + 0.1 + ')';
+    ctx.fillStyle = (names[i] === 'Вы') ? 'rgba(255, 0, 0, 1)' : 'rgba(0, 20, 160,' + getRandomNumber() + ')';
 
     addRectInCanvas(initialX += distanceBetweenColumns, initialY - (step * times[i]), widthColumns, step * times[i]);
-    addTextInCanvas(names[i], initialX, histagrammHeight + 150, 'grey');
-    addTextInCanvas(times[i].toFixed(0), initialX, histagrammHeight - (step * times[i]) + 120, 'grey');
+    addTextInCanvas(names[i], initialX, histagrammHeight + 120, 'grey');
+    addTextInCanvas(times[i].toFixed(0), initialX, histagrammHeight - (step * times[i]) + 90, 'grey');
   }
 };
