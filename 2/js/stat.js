@@ -1,42 +1,68 @@
 'use strict';
 
 window.renderStatistics = function (ctx, names, times) {
+  var distanceBetweenColumns;
+  var step;
+  var initialX;
+
+  var initialY = 250;
   var maxTime = 0;
   var maxIndex = 0;
   var histagrammHeight = 120;
-  var initialX;
-  var initialY = 250;
   var widthColumns = 40;
-  var distanceBetweenColumns;
-  var step;
-  ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-  ctx.fillRect(120, 20, 420, 270);
-  ctx.fillStyle = '#f2f2f2';
-  ctx.fillRect(110, 10, 420, 270);
-  ctx.strokeRect(110, 10, 420, 270);
+  var modalWindowWidth = 420;
+
+  var addTextInCanvas = function (text, x, y, colorText) {
+    ctx.fillStyle = colorText;
+    ctx.fillText(text, x, y);
+  };
+
+  var addRectInCanvas = function (x, y, widthRect, heightRect, colorRect) {
+    ctx.fillStyle = colorRect;
+    ctx.fillRect(x, y, widthRect, heightRect);
+  };
+
+  var bazierInCanvas = function (x, y, colorBg) {
+    ctx.beginPath();
+    ctx.fillStyle = colorBg;
+    ctx.moveTo(89 + x, 452 + y);
+    ctx.bezierCurveTo(89 + x, 452 + y, 340 + x, 455 + y, 468 + x, 453 + y);
+    ctx.bezierCurveTo(504 + x, 452 + y, 587 + x, 459 + y, 583 + x, 354 + y);
+    ctx.bezierCurveTo(581 + x, 288 + y, 555 + x, 329 + y, 519 + x, 273 + y);
+    ctx.bezierCurveTo(402 + x, 89 + y, -33 + x, 214 + y, 62 + x, 233 + y);
+    ctx.bezierCurveTo(184 + x, 258 + y, 98 + x, 292 + y, 58 + x, 306 + y);
+    ctx.bezierCurveTo(-24 + x, 335 + y, 89 + x, 451 + y, 88 + x, 451 + y);
+    ctx.stroke();
+    ctx.fill();
+  };
+  bazierInCanvas(30, -160, 'rgba(0, 0, 0, 0.7)');
+  bazierInCanvas(20, -170, '#ffffff');
+
   ctx.font = '16px PT Mono';
-  ctx.fillStyle = 'green';
-  ctx.fillText('Ура вы победили!', 240, 40);
-  ctx.fillStyle = 'grey';
-  ctx.font = '16px PT Mono';
-  ctx.fillText('Список результатов:', 230, 60);
-  for (var i = 0; i < times.length; i++) {
-    if (times[i] > maxTime) {
-      maxTime = times[i];
-      maxIndex = i;
+  addTextInCanvas('Ура вы победили!', 240, 40, 'green');
+  addTextInCanvas('Список результатов:', 230, 60, 'grey');
+
+  var getMaxNumber = function (arr) {
+    for (var i = 0; i < arr.length; i++) {
+      if (arr[i] > maxTime) {
+        maxTime = arr[i];
+        maxIndex = i;
+      }
     }
-  }
+  };
+  getMaxNumber(times);
+
   step = histagrammHeight / maxTime;
-  distanceBetweenColumns = 420 / names.length;
+  distanceBetweenColumns = modalWindowWidth / names.length;
   initialX = (distanceBetweenColumns / 2) - (widthColumns / 2);
-  ctx.fillStyle = 'red';
-  ctx.fillText('Худшее время ' + maxTime.toFixed(2) + ' мс у игрока ' + names[maxIndex], 150, 90);
-  ctx.fillRect(initialX, initialY - (step * times[i]), widthColumns, step * times[i]);
-  for (i = 0; i < names.length; i++) {
-    ctx.fillStyle = (names[i] === 'Вы') ? 'rgba(255, 0, 0, 1)' : 'rgba(0, 20, 160,' + Math.random() * (1 - 0.2) + ')';
-    ctx.fillRect(initialX += distanceBetweenColumns, initialY - (step * times[i]), widthColumns, step * times[i]);
-    ctx.fillStyle = 'grey';
-    ctx.fillText(names[i], initialX, histagrammHeight + 150);
-    ctx.fillText(times[i].toFixed(2), initialX, histagrammHeight - (step * times[i]) + 120);
+
+  addTextInCanvas('Худшее время ' + maxTime.toFixed(2) + ' мс у игрока ' + names[maxIndex], 150, 90, 'red');
+  addRectInCanvas(initialX, initialY - (step * times[i]), widthColumns, step * times[i]);
+
+  for (var i = 0; i < names.length; i++) {
+    ctx.fillStyle = (names[i] === 'Вы') ? 'rgba(255, 0, 0, 1)' : 'rgba(0, 20, 160,' + Math.ceil(Math.random() * 10) / 10 + ')';
+    addRectInCanvas(initialX += distanceBetweenColumns, initialY - (step * times[i]), widthColumns, step * times[i]);
+    addTextInCanvas(names[i], initialX, histagrammHeight + 150, 'grey');
+    addTextInCanvas(times[i].toFixed(2), initialX, histagrammHeight - (step * times[i]) + 120, 'grey');
   }
 };
