@@ -1,9 +1,7 @@
 'use strict';
 
 window.renderStatistics = function (ctx, names, times) {
-  var step;
-
-  var initialX = 170;
+  var initialX = 90;
   var initialY = 250;
   var distanceBetweenColumns = 50;
   var maxTime = 0;
@@ -50,7 +48,7 @@ window.renderStatistics = function (ctx, names, times) {
   };
   getMaxNumber(times);
 
-  step = histagrammHeight / maxTime;
+  var step = histagrammHeight / maxTime;
 
   var getRandomNumber = function (min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -59,7 +57,7 @@ window.renderStatistics = function (ctx, names, times) {
   for (var i = 0; i < names.length; i++) {
     ctx.fillStyle = (names[i] === 'Вы') ? 'rgba(255, 0, 0, 1)' : 'rgba(0, 20, 160,' + (getRandomNumber(20, 100) / 100) + ')';
 
-    addRectInCanvas(initialX += distanceBetweenColumns, initialY - (step * times[i]), widthColumns, step * times[i]);
+    addRectInCanvas(initialX += (distanceBetweenColumns + widthColumns), initialY - (step * times[i]), widthColumns, step * times[i]);
     addTextInCanvas(names[i], initialX, histagrammHeight + 120, 'grey');
     addTextInCanvas(times[i].toFixed(0), initialX, histagrammHeight - (step * times[i]) + 90, 'grey');
   }
