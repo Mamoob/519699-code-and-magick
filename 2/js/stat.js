@@ -1,16 +1,14 @@
 'use strict';
 
 window.renderStatistics = function (ctx, names, times) {
-  var distanceBetweenColumns;
   var step;
-  var initialX;
 
+  var initialX = 170;
   var initialY = 250;
+  var distanceBetweenColumns = 50;
   var maxTime = 0;
-  var maxIndex = 0;
-  var histagrammHeight = 120;
+  var histagrammHeight = 150;
   var widthColumns = 40;
-  var modalWindowWidth = 420;
 
   var addTextInCanvas = function (text, x, y, colorText) {
     ctx.fillStyle = colorText;
@@ -39,6 +37,7 @@ window.renderStatistics = function (ctx, names, times) {
   bazierInCanvas(20, -170, '#ffffff');
 
   ctx.font = '16px PT Mono';
+
   addTextInCanvas('Ура вы победили!', 240, 40, 'green');
   addTextInCanvas('Список результатов:', 230, 60, 'grey');
 
@@ -46,23 +45,22 @@ window.renderStatistics = function (ctx, names, times) {
     for (var i = 0; i < arr.length; i++) {
       if (arr[i] > maxTime) {
         maxTime = arr[i];
-        maxIndex = i;
       }
     }
   };
   getMaxNumber(times);
 
   step = histagrammHeight / maxTime;
-  distanceBetweenColumns = modalWindowWidth / names.length;
-  initialX = (distanceBetweenColumns / 2) - (widthColumns / 2);
 
-  addTextInCanvas('Худшее время ' + maxTime.toFixed(2) + ' мс у игрока ' + names[maxIndex], 150, 90, 'red');
-  addRectInCanvas(initialX, initialY - (step * times[i]), widthColumns, step * times[i]);
+  var getRandomNumber = function (min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  };
 
   for (var i = 0; i < names.length; i++) {
-    ctx.fillStyle = (names[i] === 'Вы') ? 'rgba(255, 0, 0, 1)' : 'rgba(0, 20, 160,' + Math.ceil(Math.random() * 10) / 10 + ')';
+    ctx.fillStyle = (names[i] === 'Вы') ? 'rgba(255, 0, 0, 1)' : 'rgba(0, 20, 160,' + (getRandomNumber(20, 100) / 100) + ')';
+
     addRectInCanvas(initialX += distanceBetweenColumns, initialY - (step * times[i]), widthColumns, step * times[i]);
-    addTextInCanvas(names[i], initialX, histagrammHeight + 150, 'grey');
-    addTextInCanvas(times[i].toFixed(2), initialX, histagrammHeight - (step * times[i]) + 120, 'grey');
+    addTextInCanvas(names[i], initialX, histagrammHeight + 120, 'grey');
+    addTextInCanvas(times[i].toFixed(0), initialX, histagrammHeight - (step * times[i]) + 90, 'grey');
   }
 };
