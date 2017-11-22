@@ -52,12 +52,12 @@ window.renderStatistics = function (ctx, names, times) {
 
   step = histagrammHeight / maxTime;
 
-  var getRandomNumber = function (max) {
-    return Math.ceil(Math.random() * (max)) / max;
+  var getRandomNumber = function (min, max) {
+    return (Math.floor(Math.random() * (max - min + 1)) + min) / 100;
   };
 
   for (var i = 0; i < names.length; i++) {
-    ctx.fillStyle = (names[i] === 'Вы') ? 'rgba(255, 0, 0, 1)' : 'rgba(0, 20, 160,' + getRandomNumber(10) + ')';
+    ctx.fillStyle = (names[i] === 'Вы') ? 'rgba(255, 0, 0, 1)' : 'rgba(0, 20, 160,' + getRandomNumber(20, 100) + ')';
 
     addRectInCanvas(initialX += distanceBetweenColumns, initialY - (step * times[i]), widthColumns, step * times[i]);
     addTextInCanvas(names[i], initialX, histagrammHeight + 120, 'grey');
