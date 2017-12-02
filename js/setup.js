@@ -11,15 +11,15 @@ var ENTER_KEYCODE = 13;
 
 var setup = document.querySelector('.setup');
 var wizardTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
-var similarItems = document.querySelector('.setup-similar');
-var similarPlayer = document.querySelector('.setup-similar-list');
+var similarItems = setup.querySelector('.setup-similar');
+var similarPlayer = setup.querySelector('.setup-similar-list');
 var fragment = document.createDocumentFragment();
 var setupOpen = document.querySelector('.setup-open');
-var setupClose = document.querySelector('.setup-close');
-var setupUserName = document.querySelector('.setup-user-name');
-var wizardCoat = document.querySelector('.setup-wizard .wizard-coat');
-var wizardEye = document.querySelector('.setup-wizard .wizard-eyes');
-var wizardFireball = document.querySelector('.setup-fireball-wrap');
+var setupClose = setup.querySelector('.setup-close');
+var setupUserName = setup.querySelector('.setup-user-name');
+var wizardCoat = setup.querySelector('.setup-wizard .wizard-coat');
+var wizardEye = setup.querySelector('.setup-wizard .wizard-eyes');
+var wizardFireball = setup.querySelector('.setup-fireball-wrap');
 
 setup.classList.remove('hidden');
 similarItems.classList.remove('hidden');
@@ -101,7 +101,9 @@ setupUserName.addEventListener('focus', function () {
   document.removeEventListener('keydown', onPopupEscPress);
 });
 
-document.addEventListener('keydown', onPopupEscPress);
+setupUserName.addEventListener('blur', function () {
+  document.addEventListener('keydown', onPopupEscPress);
+});
 
 var renderCoatColorUserWizard = function () {
   wizardCoat.addEventListener('click', function () {
