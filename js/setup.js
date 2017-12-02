@@ -69,12 +69,6 @@ var closePopup = function () {
   document.removeEventListener('keydown', onPopupEscPress);
 };
 
-setupClose.addEventListener('keydown', function (evt) {
-  if (evt.keyCode === ESC_KEYCODE) {
-    closePopup();
-  }
-});
-
 setupOpen.addEventListener('click', function () {
   openPopup();
 });
