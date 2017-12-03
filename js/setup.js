@@ -120,5 +120,4 @@ var renderFireballColorUserWizard = function () {
     wizardFireball.style.background = FIREBALL_COLORS[getRandomNumber(0, FIREBALL_COLORS.length)];
   });
 };
-
 renderFireballColorUserWizard();
