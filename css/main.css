@@ -721,6 +721,11 @@ input[type=radio]:checked + .review-mark-label {
   border-right-width: 1px;
 }
 
+.dragSelect {
+  background-color: yellow;
+  border: 2px dashed red;
+}
+
 .setup-footer {
   border-top: 10px solid #1cb34d;
   padding-bottom: 20px;
