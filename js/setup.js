@@ -41,37 +41,9 @@
 
   similarPlayer.appendChild(fragment);
 
-  // COLORIZE
-
-  (function () {
-    var FIREBALL_COLORS = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
-
-    var wizardCoat = setup.querySelector('.setup-wizard .wizard-coat');
-    var wizardEye = setup.querySelector('.setup-wizard .wizard-eyes');
-    var wizardFireball = setup.querySelector('.setup-fireball-wrap');
-
-    var renderCoatColorUserWizard = function () {
-      wizardCoat.addEventListener('click', function () {
-        wizardCoat.style.fill = COAT_COLORS[window.utill.isRandomNumberEvent(0, COAT_COLORS.length)];
-      });
-    };
-
-    renderCoatColorUserWizard();
-
-    var renderEyeColorUserWizard = function () {
-      wizardEye.addEventListener('click', function () {
-        wizardEye.style.fill = EYES_COLORS[window.utill.isRandomNumberEvent(0, EYES_COLORS.length)];
-      });
-    };
-
-    renderEyeColorUserWizard();
-
-    var renderFireballColorUserWizard = function () {
-      wizardFireball.addEventListener('click', function () {
-        wizardFireball.style.background = FIREBALL_COLORS[window.utill.isRandomNumberEvent(0, FIREBALL_COLORS.length)];
-      });
-    };
-
-    renderFireballColorUserWizard();
-  })();
+  window.setup = {
+    setup: setup,
+    COAT_COLORS: COAT_COLORS,
+    EYES_COLORS: EYES_COLORS
+  };
 })();
