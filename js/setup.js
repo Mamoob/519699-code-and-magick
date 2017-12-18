@@ -13,7 +13,6 @@
   var similarPlayer = setup.querySelector('.setup-similar-list');
   var fragment = document.createDocumentFragment();
 
-  // setup.classList.remove('hidden');
   similarItems.classList.remove('hidden');
 
   var getWizardProperty = function () {
