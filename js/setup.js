@@ -52,11 +52,17 @@
 
   similarPlayer.appendChild(fragment);
 
-  window.colorizeElement.colorizeElement(wizardCoat, COAT_COLORS[window.utill.isRandomNumberEvent(0, COAT_COLORS.length - 1)], fillElement);
+  wizardCoat.addEventListener('click', function () {
+    window.colorizeElement.colorizeElement(wizardCoat, COAT_COLORS[window.utill.isRandomNumberEvent(0, COAT_COLORS.length - 1)], fillElement);
+  });
 
-  window.colorizeElement.colorizeElement(wizardEye, EYES_COLORS[window.utill.isRandomNumberEvent(0, EYES_COLORS.length - 1)], fillElement);
+  wizardEye.addEventListener('click', function () {
+    window.colorizeElement.colorizeElement(wizardEye, EYES_COLORS[window.utill.isRandomNumberEvent(0, EYES_COLORS.length - 1)], fillElement);
+  });
 
-  window.colorizeElement.colorizeElement(wizardFireball, FIREBALL_COLORS[window.utill.isRandomNumberEvent(0, FIREBALL_COLORS.length - 1)], changeElementBackground);
+  wizardFireball.addEventListener('click', function () {
+    window.colorizeElement.colorizeElement(wizardFireball, FIREBALL_COLORS[window.utill.isRandomNumberEvent(0, FIREBALL_COLORS.length - 1)], changeElementBackground);
+  });
 
   window.setup = {
     setup: setup
