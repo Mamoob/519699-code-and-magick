@@ -10,11 +10,25 @@
     xhr.timeout = 10000;
 
     xhr.addEventListener('load', function () {
-      if (xhr.status === 200) {
-        onLoad(xhr.response);
+      switch (xhr.status) {
+        case 200:
+          onLoad(xhr.response);
+          break;
 
-      } else {
-        onError('Неизвестный статус: ' + xhr.status + ' ' + xhr.statusText);
+        case 400:
+          onError('Неверный запрос');
+          break;
+
+        case 401:
+          onError('Пользователь не авторизован');
+          break;
+
+        case 404:
+          onError('Ничего не найдено');
+          break;
+
+        default:
+          onError('Неизвестный статус: ' + xhr.status + ' ' + xhr.statusText);
       }
     });
 
