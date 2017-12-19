@@ -1,8 +1,6 @@
 'use strict';
 
 (function () {
-  var NAMES = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
-  var SURNAMES = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
   var COAT_COLORS = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
   var EYES_COLORS = ['black', 'red', 'blue', 'yellow', 'green'];
   var QUANTITY_WIZARDS = 4;
@@ -16,24 +14,16 @@
   var wizardCoat = setup.querySelector('.setup-wizard .wizard-coat');
   var wizardEye = setup.querySelector('.setup-wizard .wizard-eyes');
   var wizardFireball = setup.querySelector('.setup-fireball-wrap');
+  var form = setup.querySelector('.setup-wizard-form');
 
   similarItems.classList.remove('hidden');
-
-  var getWizardProperty = function () {
-    return {
-      name: NAMES[window.utill.isRandomNumberEvent(0, NAMES.length - 1)],
-      surname: SURNAMES[window.utill.isRandomNumberEvent(0, SURNAMES.length - 1)],
-      coatColor: COAT_COLORS[window.utill.isRandomNumberEvent(0, COAT_COLORS.length - 1)],
-      eyesColor: EYES_COLORS[window.utill.isRandomNumberEvent(0, EYES_COLORS.length - 1)]
-    };
-  };
 
   var renderWizard = function (wizard) {
     var wizardElement = wizardTemplate.cloneNode(true);
 
-    wizardElement.querySelector('.setup-similar-label').textContent = wizard.name + ' ' + wizard.surname;
-    wizardElement.querySelector('.wizard-coat').style.fill = wizard.coatColor;
-    wizardElement.querySelector('.wizard-eyes').style.fill = wizard.eyesColor;
+    wizardElement.querySelector('.setup-similar-label').textContent = wizard.name;
+    wizardElement.querySelector('.wizard-coat').style.fill = wizard.colorCoat;
+    wizardElement.querySelector('.wizard-eyes').style.fill = wizard.colorEyes;
 
     return wizardElement;
   };
@@ -46,9 +36,36 @@
     element.style.backgroundColor = color;
   };
 
-  for (var i = 0; i < QUANTITY_WIZARDS; i++) {
-    fragment.appendChild(renderWizard(getWizardProperty()));
-  }
+  var successDownloadHandler = function (wizards) {
+    var random = window.utill.isRandomNumberEvent(0, 12);
+
+    var fragmentSimilarPlayer = document.createDocumentFragment();
+
+    for (var j = random; j < random + QUANTITY_WIZARDS; j++) {
+      fragmentSimilarPlayer.appendChild(renderWizard(wizards[j]));
+    }
+    similarPlayer.appendChild(fragmentSimilarPlayer);
+  };
+
+  var errorDownloadHandler = function (errorMessage) {
+    var node = document.createElement('div');
+
+    node.classList.add('error-text');
+    node.textContent = errorMessage;
+
+    document.body.insertAdjacentElement('afterbegin', node);
+  };
+
+  var successUploadHandler = function () {
+    form.classList.add('hidden');
+  };
+
+  var errorUploadHandler = function (errorMessage) {
+    var node = document.createElement('div');
+
+    node.classList.add('error-text');
+    node.textContent = 'Произошла ошибка отправки данных: ' + errorMessage;
+  };
 
   similarPlayer.appendChild(fragment);
 
@@ -62,6 +79,14 @@
 
   wizardFireball.addEventListener('click', function () {
     window.colorizeElement.colorizeElement(wizardFireball, FIREBALL_COLORS[window.utill.isRandomNumberEvent(0, FIREBALL_COLORS.length - 1)], changeElementBackground);
+  });
+
+  window.backend.load(successDownloadHandler, errorDownloadHandler);
+
+  form.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+
+    window.backend.save(new FormData(form), successUploadHandler, errorUploadHandler);
   });
 
   window.setup = {
