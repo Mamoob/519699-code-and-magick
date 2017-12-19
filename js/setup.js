@@ -37,9 +37,11 @@
   };
 
   var successDownloadHandler = function (wizards) {
+    var random = window.utill.isRandomNumberEvent(0, 12);
+
     var fragmentSimilarPlayer = document.createDocumentFragment();
 
-    for (var j = 0; j < QUANTITY_WIZARDS; j++) {
+    for (var j = random; j < random + QUANTITY_WIZARDS; j++) {
       fragmentSimilarPlayer.appendChild(renderWizard(wizards[j]));
     }
     similarPlayer.appendChild(fragmentSimilarPlayer);
@@ -58,11 +60,11 @@
     form.classList.add('hidden');
   };
 
-  var errorUploadHandler = function () {
+  var errorUploadHandler = function (errorMessage) {
     var node = document.createElement('div');
 
     node.classList.add('error-text');
-    node.textContent = 'Произошла ошибка отправки данных';
+    node.textContent = 'Произошла ошибка отправки данных: ' + errorMessage;
   };
 
   similarPlayer.appendChild(fragment);
@@ -79,12 +81,12 @@
     window.colorizeElement.colorizeElement(wizardFireball, FIREBALL_COLORS[window.utill.isRandomNumberEvent(0, FIREBALL_COLORS.length - 1)], changeElementBackground);
   });
 
-  window.backend.download(successDownloadHandler, errorDownloadHandler);
+  window.backend.load(successDownloadHandler, errorDownloadHandler);
 
   form.addEventListener('submit', function (evt) {
     evt.preventDefault();
 
-    window.backend.upload(new FormData(form), successUploadHandler, errorUploadHandler);
+    window.backend.save(new FormData(form), successUploadHandler, errorUploadHandler);
   });
 
   window.setup = {
