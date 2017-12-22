@@ -81,7 +81,7 @@
     }
     lastTimeout = setTimeout(function () {
       updateWizards();
-    }, 300);
+    }, 500);
 
     coatColor = COAT_COLORS[window.utill.isRandomNumberEvent(0, COAT_COLORS.length - 1)];
     window.colorizeElement.colorizeElement(wizardCoat, coatColor, fillElement);
@@ -93,7 +93,7 @@
     }
     lastTimeout = setTimeout(function () {
       updateWizards();
-    }, 300);
+    }, 500);
 
     eyesColor = EYES_COLORS[window.utill.isRandomNumberEvent(0, EYES_COLORS.length - 1)];
     window.colorizeElement.colorizeElement(wizardEye, eyesColor, fillElement);
@@ -105,7 +105,7 @@
     }
     lastTimeout = setTimeout(function () {
       updateWizards();
-    }, 300);
+    }, 500);
 
     fireballColor = FIREBALL_COLORS[window.utill.isRandomNumberEvent(0, FIREBALL_COLORS.length - 1)];
     window.colorizeElement.colorizeElement(wizardFireball, fireballColor, changeElementBackground);
