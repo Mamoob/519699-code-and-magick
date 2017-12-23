@@ -16,15 +16,38 @@
   var fireballColor;
   var lastTimeout;
 
+  var successDownloadHandler = function (data) {
+    wizards = data.slice(0);
+
+    updateWizards();
+
+    similarItems.classList.remove('hidden');
+  };
+
+  var errorDownloadHandler = function (errorMessage) {
+    var node = document.createElement('div');
+
+    node.classList.add('error-text');
+    node.textContent = errorMessage;
+
+    document.body.insertAdjacentElement('afterbegin', node);
+  };
+
   var getRank = function (wizard) {
     var rank = 0;
 
     if (wizard.colorCoat === coatColor) {
       rank += 2;
+    }
 
-    } else if (wizard.colorEyes === eyesColor) {
+    if (wizard.colorEyes === eyesColor) {
       rank += 1;
     }
+
+    if (wizard.colorFireball === fireballColor) {
+      rank += 1;
+    }
+
     return rank;
   };
 
@@ -55,60 +78,41 @@
       if (rankDiff === 0) {
         rankDiff = namesComparator(left.name, right.name);
       }
+
       return rankDiff;
     }));
   };
 
-  var successDownloadHandler = function (data) {
-    wizards = data.slice(0);
+  var debounce = function (action, time) {
+    if (lastTimeout) {
+      clearTimeout(lastTimeout);
+    }
 
-    updateWizards();
-    similarItems.classList.remove('hidden');
-  };
-
-  var errorDownloadHandler = function (errorMessage) {
-    var node = document.createElement('div');
-
-    node.classList.add('error-text');
-    node.textContent = errorMessage;
-
-    document.body.insertAdjacentElement('afterbegin', node);
+    lastTimeout = setTimeout(function () {
+      action();
+    }, time);
   };
 
   wizardCoat.addEventListener('click', function () {
-    if (lastTimeout) {
-      clearTimeout(lastTimeout);
-    }
-    lastTimeout = setTimeout(function () {
-      updateWizards();
-    }, 500);
-
     coatColor = COAT_COLORS[window.utill.isRandomNumberEvent(0, COAT_COLORS.length - 1)];
     window.colorizeElement.colorizeElement(wizardCoat, coatColor, fillElement);
+
+    debounce(updateWizards, 500);
   });
 
   wizardEye.addEventListener('click', function () {
-    if (lastTimeout) {
-      clearTimeout(lastTimeout);
-    }
-    lastTimeout = setTimeout(function () {
-      updateWizards();
-    }, 500);
-
     eyesColor = EYES_COLORS[window.utill.isRandomNumberEvent(0, EYES_COLORS.length - 1)];
     window.colorizeElement.colorizeElement(wizardEye, eyesColor, fillElement);
+
+    debounce(updateWizards, 500);
   });
 
   wizardFireball.addEventListener('click', function () {
-    if (lastTimeout) {
-      clearTimeout(lastTimeout);
-    }
-    lastTimeout = setTimeout(function () {
-      updateWizards();
-    }, 500);
-
     fireballColor = FIREBALL_COLORS[window.utill.isRandomNumberEvent(0, FIREBALL_COLORS.length - 1)];
     window.colorizeElement.colorizeElement(wizardFireball, fireballColor, changeElementBackground);
+
+    debounce(updateWizards, 500);
   });
+
   window.backend.load(successDownloadHandler, errorDownloadHandler);
 })();
