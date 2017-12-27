@@ -1,6 +1,8 @@
 'use strict';
 
 (function () {
+  var QUANTITY_WIZARDS = 4;
+
   var setup = document.querySelector('.setup');
   var wizardTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
   var similarItems = setup.querySelector('.setup-similar');
@@ -21,7 +23,7 @@
 
   var addWizards = function (wizard) {
     var fragmentSimilarPlayer = document.createDocumentFragment();
-    var takeNumber = wizard.length > 4 ? 4 : wizard.length;
+    var takeNumber = wizard.length > QUANTITY_WIZARDS ? QUANTITY_WIZARDS : wizard.length;
 
     similarPlayer.innerHTML = '';
 
